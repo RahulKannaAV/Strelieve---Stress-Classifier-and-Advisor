@@ -1,0 +1,23 @@
+from transformers import pipeline
+import torch
+
+classifier = pipeline("zero-shot-classification",
+                      model="facebook/bart-large-mnli")
+
+second_response = "Yes, Mostly. My heart races suddenly, especially when I’m anxious or stressed, and sometimes it makes me feel lightheaded."
+first_response = "I feel relaxed and at peace these days"
+third_response = "I often feel on edge, especially when I have too much to do."
+
+rp_hb_labels = ['No', 'Rarely', 'Often', 'Mostly', 'All the time']
+stress_labels = ['Relaxed','Tensed','Slightly Stressed','Moderately Stressed', 'Extremely Stressed']
+deal_with_anxiety_labels = ['No anxiety', 'Slightly Anxious', 'Moderately Anxious','Highly Anxious' ,'Extremely anxious']
+
+
+result = classifier(second_response, candidate_labels=rp_hb_labels)
+first_result = classifier(first_response, candidate_labels=stress_labels)
+third_result = classifier(third_response, candidate_labels=deal_with_anxiety_labels)
+
+q1_val = rp_hb_labels.index(result['labels'][0]) + 1
+print(q1_val)
+
+print(third_result)

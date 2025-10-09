@@ -1,0 +1,6 @@
+{
+  "experienced_stress": ["No", "Rarely", "Often", "Mostly", "All the time"],
+  "rapid_heartbeats": ["Relaxed","Tensed","Slightly Stressed","Moderately Stressed", "Extremely Stressed"],
+  "anxiety": ["No anxiety", "Slightly Anxious", "Moderately Anxious","Highly Anxious" ,"Extremely anxious"],
+  "sleep_problems": ["No problems", "Slight problem","Moderate problem","Big problem", "Extremely big problem"]
+}
