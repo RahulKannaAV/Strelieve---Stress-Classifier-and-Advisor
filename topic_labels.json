@@ -3,4 +3,23 @@
   "rapid_heartbeats": ["Relaxed","Tensed","Slightly Stressed","Moderately Stressed", "Extremely Stressed"],
   "anxiety": ["No anxiety", "Slightly Anxious", "Moderately Anxious","Highly Anxious" ,"Extremely anxious"],
   "sleep_problems": ["No problems", "Slight problem","Moderate problem","Big problem", "Extremely big problem"]
+  "tension": [],
+  "headaches": [],
+  "irritated": [],
+  "concentration_trouble": [],
+  "sadness": [],
+  "illness": [],
+  "isolated": [],
+  "academic_workload": [],
+  "competition": [],
+  "relationships": [],
+  "difficulties_with_professors": [],
+  "stressful_workplace": [],
+  "relaxation_time_amount": [],
+  "hostel_environment_difficulty": [],
+  "confidence_lack": [],
+  "subject_confidence_lack": [],
+  "conflict_academic_activities": [],
+  "attend_classes": [],
+  "gain_loss_weight": ["Lost lot of weight", "Lost slight weight", "No change in weight", "Gained slight weight","Gained lot of weights"]
 }
