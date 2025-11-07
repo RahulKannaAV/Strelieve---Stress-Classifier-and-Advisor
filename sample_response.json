@@ -1,0 +1,116 @@
+{
+  "experienced_stress": {
+    "question": "Have you recently experienced stress in your life?",
+    "response": "Yes, definitely. Between exams, projects, and personal stuff, it’s been pretty overwhelming."
+  },
+
+  "rapid_heartbeats": {
+    "question": "Have you noticed a rapid heartbeat or palpitations?",
+    "response": "Occasionally, especially when I’m anxious or rushing to class, but it’s not frequent."
+  },
+
+  "anxiety": {
+    "question": "Have you been dealing with anxiety or tension recently?",
+    "response": "A little bit — mostly just normal college stress, nothing too intense."
+  },
+
+  "sleep_problems": {
+    "question": "Do you face any sleep problems or difficulties falling asleep?",
+    "response": "Yes, but I’m trying new things like avoiding screens before bed, and it’s been helping."
+  },
+
+  "tension":{
+    "question": "Have you been dealing with anxiety or tension recently?",
+    "response": "Yeah, I’ve been dealing with some anxiety recently, but I’m trying to manage it."
+  },
+
+  "headaches": {
+    "question": "Have you been getting headaches more often than usual?",
+    "response": "Not really — my headaches are about the same as before."
+  },
+
+  "irritated": {
+    "question": "Do you get irritated easily?",
+    "response": "Yes, I’ve been getting irritated pretty quickly these days, especially with deadlines and workload piling up."
+  },
+
+  "concentration_trouble": {
+    "question": "Do you have trouble concentrating on your academic tasks?",
+    "response": "A little — sometimes it’s hard to stay focused, but I eventually get it done."
+  },
+
+  "sadness": {
+    "question": "Have you been feeling sadness or low mood?",
+    "response": "Not really — I’ve been feeling okay for the most part."
+  },
+
+  "illness": {
+    "question": "Have you been experiencing any illness or health issues?",
+    "response": "Just small things — like a cold or feeling tired sometimes."
+  },
+
+  "isolated": {
+    "question": "Do you often feel lonely or isolated?",
+    "response": "Sometimes — usually when everyone’s busy, but it doesn’t bother me too much."
+  },
+
+  "academic_workload": {
+    "question": "Do you feel overwhelmed with your academic workload?",
+    "response": "Yeah, I’ve been feeling overwhelmed with my workload lately."
+  },
+
+  "competition": {
+    "question": "Are you in competition with your peers, and does it affect you?",
+    "response": "Yes, the competition is pretty intense, and it sometimes makes me stressed or anxious."
+  },
+
+  "relationships": {
+    "question": "Do you find that your relationship often causes you stress?",
+    "response": "Yes, quite often. It’s been affecting my mood and focus."
+  },
+
+  "difficulties_with_professors": {
+    "question": "Are you facing any difficulties with your professors or instructors?",
+    "response": "A little — mostly small misunderstandings, nothing too serious."
+  },
+
+  "stressful_workplace": {
+    "question": "Is your working environment unpleasant or stressful?",
+    "response": "Not really — it’s generally okay."
+  },
+
+  "relaxation_time_amount": {
+    "question": "Do you struggle to find time for relaxation and leisure activities?",
+    "response": "Yeah, I’ve been struggling to find time to relax lately."
+  },
+
+  "hostel_environment_difficulty": {
+    "question": "Is your hostel or home environment causing you difficulties?",
+    "response": "A little — nothing major, just occasional inconveniences."
+  },
+
+  "confidence_lack": {
+    "question": "Do you lack confidence in your academic performance?",
+    "response": "Yes, I’ve been lacking confidence in my studies and often feel like I’m not doing well enough."
+  },
+
+  "subject_confidence_lack": {
+    "question": "Do you lack confidence in your choice of academic subjects?",
+    "response": "A little — I sometimes wonder if I picked the best subjects, but I’m sticking with them."
+  },
+
+  "conflict_acad_concurr_activities": {
+    "question": "Academic and extracurricular activities conflicting for you?",
+    "response": "Yes, a lot. It’s been really hard to juggle both, and I often feel overwhelmed."
+  },
+
+  "attend_classes": {
+    "question": "Do you attend classes regularly?",
+    "response": "I try to attend regularly, but I do miss some classes here and there."
+  },
+
+  "gain_loss_weight": {
+    "question": "Have you gained/lost weight?",
+    "response": "Yes, I’ve lost weight recently — my appetite and schedule have been pretty off."
+  }
+}
