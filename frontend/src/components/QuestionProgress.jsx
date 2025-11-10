@@ -1,18 +1,41 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
+import {LOCALHOST} from '../constant.js';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
 const QuestionProgress = () => {
+  const [steps, setSteps] = useState(['Select campaign settings', 'Create an ad group', 'Create an ad']);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
+  useEffect(() => {
+    const getSections = async() => {
+      try {
+        const sectionResponse = await axios.get(`${LOCALHOST}/get-sections`);
+
+        if(sectionResponse.status == 200) {
+          console.log("Successfully received the Section data");
+          setSteps(sectionResponse.data);
+        }
+      } catch(err) {
+        console.error(`Error in getting Section data: ${err}`)
+      }
+    }
+
+    getSections();
+  }, []);
+
+  console.log(steps);
+
   const isStepOptional = (step) => {
-    return step === 1;
+    return step === -1;
   };
 
   const isStepSkipped = (step) => {

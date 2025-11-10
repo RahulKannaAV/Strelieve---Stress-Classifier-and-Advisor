@@ -7,11 +7,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 
-const Question = ({number}) => {
+const Question = ({number, text}) => {
     return (
         <Grid sx={{
             margin: "20px 0px 0px 20px" 
-        }}>
+        }}>{}
           <InputLabel
           sx={{
             fontWeight: "bold",
@@ -22,7 +22,7 @@ const Question = ({number}) => {
             <Typography display="inline" variant="h3" fontWeight="bold">
                 {number})&nbsp;
             </Typography>
-            Have you recently experienced anxiety? </InputLabel>
+            {text} </InputLabel>
             <OutlinedInput
                 fullWidth
                 id="outlined-adornment-amount"
