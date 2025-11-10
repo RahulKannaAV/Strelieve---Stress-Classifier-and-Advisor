@@ -1,4 +1,12 @@
 {
+  "gender": {
+    "question": "Mention your Gender (0 - Male, 1 - Female)",
+    "response": "0"
+  },
+  "age":{
+    "question": "Mention your Age (18-21)",
+    "response": "20"
+  },
   "experienced_stress": {
     "question": "Have you recently experienced stress in your life?",
     "response": "Yes, definitely. Between exams, projects, and personal stuff, it’s been pretty overwhelming."
