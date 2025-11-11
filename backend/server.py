@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
+from flask import request
 
 app = Flask(__name__)
 CORS(app)
@@ -17,6 +18,12 @@ def get_timeline_sections():
     sections = list(question_section_dict.keys())
     return jsonify(sections)
 
+@app.route("/section-question", methods=['GET'])
+def get_section_questions():
+    section = request.args.get("section")
+    print(section)
+
+    return question_section_dict[section]
 @app.route("/get-questions", methods=['GET'])
 def get_survey_questions():
     with open('../sample_response.json', 'r') as f:

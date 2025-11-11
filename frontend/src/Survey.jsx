@@ -7,6 +7,10 @@ import { LOCALHOST } from './constant';
 
 const Survey = () => {
     const [allQuestions, setAllQuestions] = useState({});
+    const [allResponses, setResponses] = useState({});
+    const [currentSection, setCurrentSection] = useState("");
+    const [keyObj, setKeyObj] = useState({});
+    const [sectionKeys, setSectionKeys] = useState([]);
 
     useEffect(() => {
         const getAllSurveyQuestions = async() => {
@@ -16,24 +20,68 @@ const Survey = () => {
                 if(surveyQuestionResponse.status == 200) {
                     console.log("Questions received successfully");
                     setAllQuestions(surveyQuestionResponse.data);
+                    let dummyObj = {};
+                    let keyDummyObj = {};
+                    let i = 0;
+                    for(let key of Object.keys(surveyQuestionResponse.data)) {
+                        dummyObj[key] = "";
+                        keyDummyObj[key] = i;
+                        i++;
+                    }
+                    setResponses(dummyObj);
+                    setKeyObj(keyDummyObj);
                 }
             } catch(err) {
                 console.error(`Error in getting Survey Questions: ${err}`)
             }
         }
-
-        // TODO: Get the section questions list from the backend. Define an API for that first
-
+        
         getAllSurveyQuestions();
+        
     }, []);
 
-    console.log(allQuestions);
+    useEffect(() => {
+        // TODO: Get the section question keylist from the backend. Define an API for that first
+        const getSectionQuestionKey = async(section) => {
+            try {
+                const sectionKeys = await axios.get(`${LOCALHOST}/section-question?section=${section}`);
+                if(sectionKeys.status == 200) {
+                    setSectionKeys(sectionKeys.data);
+                    console.log("Successfully fetched section question keys");
+                }
+            } catch(err) {
+                console.error(`Error in fetching Section Question keys: ${err}`);
+            }
+        }
+
+        if(currentSection !== "done" && currentSection.length > 0) {
+            getSectionQuestionKey(currentSection);
+        }
+    }, [currentSection])
+
+
+    console.log(allResponses);
+
+    const handleSection = (sectionTitle) => {
+        setCurrentSection(sectionTitle);
+    }
+
+    const handleResponses = (responseKey, responseText) => {
+        console.log(responseKey, responseText);
+        setResponses({...allResponses, [responseKey]: responseText});
+
+        console.log(allResponses);
+    }
+
+    console.log(sectionKeys);
 
     return (
         <div className="survey-card">
-            <QuestionProgress />
-            { Object.keys(allQuestions).length > 0 && 
-            <Question number={1} text={allQuestions['gender']['question']}/>
+            <QuestionProgress sectionTitleHandler={handleSection} />
+            { Object.keys(allQuestions).length > 0  && sectionKeys.length > 0 &&
+            (sectionKeys.map((questionKey, idx) => (
+                <Question prevVal={allResponses[questionKey]} key={keyObj[questionKey]} qKey={questionKey} responseHandler={handleResponses} number={idx+1} questionText={allQuestions[questionKey]['question']}/>
+            )))
             // <Question number={2} text={allQuestions['age']['question']}/>
             }
         </div>

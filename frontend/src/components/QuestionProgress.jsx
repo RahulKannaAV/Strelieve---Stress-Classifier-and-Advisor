@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-const QuestionProgress = () => {
+const QuestionProgress = ({sectionTitleHandler}) => {
   const [steps, setSteps] = useState(['Select campaign settings', 'Create an ad group', 'Create an ad']);
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -23,6 +23,7 @@ const QuestionProgress = () => {
         if(sectionResponse.status == 200) {
           console.log("Successfully received the Section data");
           setSteps(sectionResponse.data);
+          sectionTitleHandler(sectionResponse.data[0]);
         }
       } catch(err) {
         console.error(`Error in getting Section data: ${err}`)
@@ -30,6 +31,7 @@ const QuestionProgress = () => {
     }
 
     getSections();
+
   }, []);
 
   console.log(steps);
@@ -51,10 +53,16 @@ const QuestionProgress = () => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    if(activeStep == steps.length - 1) {
+      sectionTitleHandler("done");
+    } else {
+    sectionTitleHandler(steps[activeStep+1]);
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    sectionTitleHandler(steps[activeStep-1]);
   };
 
   const handleSkip = () => {
@@ -65,6 +73,7 @@ const QuestionProgress = () => {
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    sectionTitleHandler(steps[activeStep+1]);
     setSkipped((prevSkipped) => {
       const newSkipped = new Set(prevSkipped.values());
       newSkipped.add(activeStep);
@@ -74,6 +83,7 @@ const QuestionProgress = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+    sectionTitleHandler(steps[0]);
   };
 
   return (
@@ -97,7 +107,7 @@ const QuestionProgress = () => {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length ? ( // handle redirection here
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
@@ -120,11 +130,11 @@ const QuestionProgress = () => {
               Back
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
+            {/*{isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
+            )}*/}
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
