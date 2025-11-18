@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from classify_stress import get_prediction
+from classify_stress import get_prediction, get_feature_vector, get_llm_suggestions, build_feature_vector_json
 import json
 from flask import request
 

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "type_of_stress": {
+    "type": "string"
+  },
+  "why_is_it_caused": {
+    "type": "string"
+  },
+  "advantages_of_this_stress": {
+    "type": "array",
+    "positives": {"type":  "string"}
+  },
+  "disadvantages_of_this_stress": {
+    "type": "array",
+    "negatives": {"type":  "string"}
+  },
+  "stress_score": {
+    "type": "string"
+  },
+  "overcome/cope_with_this_stress": {
+    "type": "array",
+    "tip": {"type":  "string"}
+  }
+}

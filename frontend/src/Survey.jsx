@@ -4,6 +4,7 @@ import Question from "./components/Question";
 import QuestionProgress from "./components/QuestionProgress";
 import './css/Survey.css';
 import { LOCALHOST } from './constant';
+import Typography from '@mui/material/Typography';
 
 const Survey = () => {
     const [allQuestions, setAllQuestions] = useState({});
@@ -77,6 +78,28 @@ const Survey = () => {
 
     return (
         <div className="survey-card">
+            <div style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center"
+            }}>
+                <img src={"stress.jpg"} style={{
+                    width: "80px",
+                    height: "80px",
+                    marginRight: "20px"
+                }} />
+                <Typography variant='h2' sx={{
+                textAlign: "center",
+                color: "blue",
+                fontWeight: "bold",
+                fontFamily: "Segoe UI",
+                paddingBottom: "25px"
+            }}>                         
+                
+                STRELIEVE
+                </Typography>
+            </div>
+
             <QuestionProgress sectionTitleHandler={handleSection} />
             { Object.keys(allQuestions).length > 0  && sectionKeys.length > 0 &&
             (sectionKeys.map((questionKey, idx) => (
