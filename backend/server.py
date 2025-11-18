@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+from classify_stress import get_prediction
 import json
 from flask import request
 
@@ -31,6 +32,19 @@ def get_survey_questions():
     print(sample_response_data)
     return jsonify(sample_response_data)
 
+@app.route("/generate-suggestion", methods=["POST"])
+def send_suggestions():
+    responses = request.form["user_response"]
+
+    with open('../topic_labels.json', 'r') as f:
+        topic_label_json = json.load(f)
+
+    feature_vector = get_feature_vector(responses, topic_label_json)
+    stress_type = get_prediction(feature_vector)
+
+    feature_vector_json = build_feature_vector_json(feature_vector, responses)
+
+    llm_response = get_llm_suggestions(feature_vector_json, stress_type)
 
 if __name__ == "__main__":
     app.run(debug=True, port=1234, host="localhost")
