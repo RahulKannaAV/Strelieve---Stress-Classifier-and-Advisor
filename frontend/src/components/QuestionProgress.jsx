@@ -9,10 +9,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-const QuestionProgress = ({sectionTitleHandler}) => {
+const QuestionProgress = ({sectionTitleHandler, emptyStatus}) => {
   const [steps, setSteps] = useState(['Select campaign settings', 'Create an ad group', 'Create an ad']);
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [isEmpty, setEmptyStatus] = React.useState(emptyStatus);
   const [skipped, setSkipped] = React.useState(new Set());
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const QuestionProgress = ({sectionTitleHandler}) => {
     setSkipped(newSkipped);
     if(activeStep == steps.length - 1) {
       sectionTitleHandler("done");
+      // Launch the Stress details screen
     } else {
     sectionTitleHandler(steps[activeStep+1]);
     }
@@ -84,7 +86,12 @@ const QuestionProgress = ({sectionTitleHandler}) => {
   const handleReset = () => {
     setActiveStep(0);
     sectionTitleHandler(steps[0]);
+    window.location.reload();
   };
+
+  const handleSubmission = () => {
+
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -122,10 +129,13 @@ const QuestionProgress = ({sectionTitleHandler}) => {
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
-              color="inherit"
+              color="contained"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
+              sx={{ mr: 1, 
+                color: activeStep !== 0 && "white",
+                backgroundColor: activeStep !== 0 && "black"
+              }}
             >
               Back
             </Button>
@@ -135,9 +145,22 @@ const QuestionProgress = ({sectionTitleHandler}) => {
                 Skip
               </Button>
             )}*/}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+            <Button onClick={handleNext} variant='contained'
+            sx={{
+              backgroundColor: activeStep === steps.length-1 ? "darkblue" : "violet"
+            }}
+            disabled={emptyStatus && activeStep === steps.length - 1}
+            >
+              {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
             </Button>
+            <Button variant="contained"
+                    sx={{
+                      backgroundColor: "red",
+                      marginLeft: '20px'
+                    }}
+                  onClick={handleReset}>Reset</Button>
+
+            
           </Box>
         </React.Fragment>
       )}

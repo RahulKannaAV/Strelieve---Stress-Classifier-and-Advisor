@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 const Survey = () => {
     const [allQuestions, setAllQuestions] = useState({});
     const [allResponses, setResponses] = useState({});
+    const [anyEmptyResponse, setEmptyResponse] = useState(false);
     const [currentSection, setCurrentSection] = useState("");
     const [keyObj, setKeyObj] = useState({});
     const [sectionKeys, setSectionKeys] = useState([]);
@@ -88,6 +89,20 @@ const Survey = () => {
         console.log(allResponses);
     }
 
+    
+    useEffect(() => {
+        const checkStatus = () => {
+            for(let response of Object.keys(allResponses)) {
+                if(allResponses[response].length === 0) {
+                    return true;
+                }
+            }
+    
+            return false;
+        }
+        setEmptyResponse(checkStatus());
+    }, [allResponses])
+
     console.log(sectionKeys);
 
     return (
@@ -114,7 +129,7 @@ const Survey = () => {
                 </Typography>
             </div>
 
-            <QuestionProgress sectionTitleHandler={handleSection} />
+            <QuestionProgress sectionTitleHandler={handleSection} emptyStatus={anyEmptyResponse} />
             { Object.keys(allQuestions).length > 0  && sectionKeys.length > 0 &&
             (sectionKeys.map((questionKey, idx) => (
                 <Question prevVal={allResponses[questionKey]} key={keyObj[questionKey]} qKey={questionKey} responseHandler={handleResponses} number={idx+1} questionText={allQuestions[questionKey]['question']}/>

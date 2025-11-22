@@ -51,11 +51,12 @@ def send_suggestions():
         topic_label_json = json.load(f)
 
     feature_vector = get_feature_vector(responses, topic_label_json)
-    stress_type = get_prediction(feature_vector)
+    print(feature_vector)
+"""    stress_type = get_prediction(feature_vector)
 
     feature_vector_json = build_feature_vector_json(feature_vector, responses)
 
     llm_response = get_llm_suggestions(feature_vector_json, stress_type)
-
+"""
 if __name__ == "__main__":
     app.run(debug=True, port=1234, host="localhost")
