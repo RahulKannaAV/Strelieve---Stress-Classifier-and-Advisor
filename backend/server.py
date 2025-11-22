@@ -27,16 +27,27 @@ def get_section_questions():
     return question_section_dict[section]
 @app.route("/get-questions", methods=['GET'])
 def get_survey_questions():
-    with open('../sample_response.json', 'r') as f:
+    with open('../sample_response.json', 'r', encoding='utf-8') as f:
         sample_response_data = json.load(f)
     print(sample_response_data)
     return jsonify(sample_response_data)
+
+@app.route("/load-sample-res", methods=['GET'])
+def load_sample_response():
+    response_dict = dict()
+    with open("../sample_response.json", 'r', encoding='utf-8') as f:
+        response_data = json.load(f)
+
+    for key in response_data:
+        response_dict[key] = response_data[key]['response']
+
+    return response_dict
 
 @app.route("/generate-suggestion", methods=["POST"])
 def send_suggestions():
     responses = request.form["user_response"]
 
-    with open('../topic_labels.json', 'r') as f:
+    with open('../topic_labels.json', 'r', encoding='utf-8') as f:
         topic_label_json = json.load(f)
 
     feature_vector = get_feature_vector(responses, topic_label_json)

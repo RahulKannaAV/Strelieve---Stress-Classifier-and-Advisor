@@ -5,6 +5,7 @@ import QuestionProgress from "./components/QuestionProgress";
 import './css/Survey.css';
 import { LOCALHOST } from './constant';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const Survey = () => {
     const [allQuestions, setAllQuestions] = useState({});
@@ -67,6 +68,19 @@ const Survey = () => {
         setCurrentSection(sectionTitle);
     }
 
+    const loadSampleResponse = async() => {
+        try {
+            const sampleResponses = await axios.get(`${LOCALHOST}/load-sample-res`);
+
+            if(sampleResponses.status == 200) {
+                console.log("Sample Responses successfully loaded");
+                setResponses(sampleResponses.data);
+            }
+        } catch(err) {
+            console.error(`Error in loading Sample Responses: ${err}`);
+        }
+    }
+
     const handleResponses = (responseKey, responseText) => {
         console.log(responseKey, responseText);
         setResponses({...allResponses, [responseKey]: responseText});
@@ -107,6 +121,20 @@ const Survey = () => {
             )))
             // <Question number={2} text={allQuestions['age']['question']}/>
             }
+            <div style={{display: 'flex',
+                    justifyContent: "center",
+                    marginTop: "50px",
+                    marginBottom: "25px"
+            }}>
+                <Button 
+                    variant='contained'
+                    onClick={loadSampleResponse}
+                    sx={{
+                        backgroundColor: "purple"
+                }}>
+                    IMPORT RESPONSE
+                </Button>
+            </div>
         </div>
     );
 }
