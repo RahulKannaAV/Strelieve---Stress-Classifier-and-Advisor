@@ -3,6 +3,7 @@ import axios from 'axios';
 import Question from "./components/Question";
 import QuestionProgress from "./components/QuestionProgress";
 import './css/Survey.css';
+import WaitModal from './components/WaitModal';
 import { LOCALHOST } from './constant';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -13,6 +14,7 @@ const Survey = () => {
     const [anyEmptyResponse, setEmptyResponse] = useState(false);
     const [currentSection, setCurrentSection] = useState("");
     const [keyObj, setKeyObj] = useState({});
+    const [submit, setSubmit] = useState(false);
     const [sectionKeys, setSectionKeys] = useState([]);
 
     useEffect(() => {
@@ -100,8 +102,29 @@ const Survey = () => {
     
             return false;
         }
+
+        const performSubmission = async() => {
+            try {
+                console.log("Yes. I should");
+                const sendResponse = await axios.post(`${LOCALHOST}/generate-suggestion`,
+                    {user_response: allResponses}
+                );
+                
+                openModal(true);// CONTINUE FROM HERE TOMORROW
+                if(sendResponse.status == 200) {
+                    console.log("User responses sent successfully");
+                    setWaitingMessage("Please wait for LLM response.");
+                }
+            } catch(err) {
+                console.error(`Error in sending User Response: ${err}`);
+            }
+        }
         setEmptyResponse(checkStatus());
-    }, [allResponses])
+
+        if(submit == true) {
+            performSubmission();
+        }
+    }, [allResponses, submit])
 
     console.log(sectionKeys);
 
@@ -129,7 +152,9 @@ const Survey = () => {
                 </Typography>
             </div>
 
-            <QuestionProgress sectionTitleHandler={handleSection} emptyStatus={anyEmptyResponse} />
+            <QuestionProgress sectionTitleHandler={handleSection} 
+                    emptyStatus={anyEmptyResponse} 
+                    setSubmissionStatusParent={setSubmit}/>
             { Object.keys(allQuestions).length > 0  && sectionKeys.length > 0 &&
             (sectionKeys.map((questionKey, idx) => (
                 <Question prevVal={allResponses[questionKey]} key={keyObj[questionKey]} qKey={questionKey} responseHandler={handleResponses} number={idx+1} questionText={allQuestions[questionKey]['question']}/>

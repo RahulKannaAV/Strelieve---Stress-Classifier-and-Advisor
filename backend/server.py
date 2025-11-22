@@ -45,17 +45,20 @@ def load_sample_response():
 
 @app.route("/generate-suggestion", methods=["POST"])
 def send_suggestions():
-    responses = request.form["user_response"]
+    responses = request.get_json()
+    print(responses)
 
     with open('../topic_labels.json', 'r', encoding='utf-8') as f:
         topic_label_json = json.load(f)
 
-    feature_vector = get_feature_vector(responses, topic_label_json)
+    feature_vector = get_feature_vector(responses['user_response'], topic_label_json)
     print(feature_vector)
-"""    stress_type = get_prediction(feature_vector)
+    stress_type = get_prediction(feature_vector)
 
     feature_vector_json = build_feature_vector_json(feature_vector, responses)
-
+    print(stress_type)
+    return 200
+"""
     llm_response = get_llm_suggestions(feature_vector_json, stress_type)
 """
 if __name__ == "__main__":

@@ -31,14 +31,14 @@ def print_label_class_response(model, topic_json_data, topic_key, topic_response
   return label_numeric
 
 def get_feature_vector(response, topic_label_json):
-    response_numeric = [int(response['gender']['response']), int(response['age']['response'])]
+    response_numeric = [int(response['gender']), int(response['age'])]
 
-    for key in user_response:
+    for key in response:
         if key != "age" and key != "gender":
             label_numeric = print_label_class_response(model=response_analyzer,
                                                    topic_json_data=topic_label_json,
                                                    topic_key=key,
-                                                   topic_response=user_response[key]['response'])
+                                                   topic_response=response[key])
             response_numeric.append(label_numeric)
     print(response_numeric)
     return response_numeric
@@ -51,7 +51,7 @@ def get_prediction(sample):
     with open(MODEL_PATH, 'rb') as f:
         best_model = pickle.load(f)
 
-    numeric_label = best_model.predict(sample)
+    numeric_label = best_model.predict([sample])
 
     return numeric_label
 

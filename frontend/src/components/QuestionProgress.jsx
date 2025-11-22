@@ -9,12 +9,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-const QuestionProgress = ({sectionTitleHandler, emptyStatus}) => {
+const QuestionProgress = ({sectionTitleHandler, emptyStatus, setSubmissionStatusParent}) => {
   const [steps, setSteps] = useState(['Select campaign settings', 'Create an ad group', 'Create an ad']);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [isEmpty, setEmptyStatus] = React.useState(emptyStatus);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [waitMessage, setWMessage] = useState("All steps completed - you&apos;re finished")
 
   useEffect(() => {
     const getSections = async() => {
@@ -56,6 +57,7 @@ const QuestionProgress = ({sectionTitleHandler, emptyStatus}) => {
     setSkipped(newSkipped);
     if(activeStep == steps.length - 1) {
       sectionTitleHandler("done");
+      handleSubmission();
       // Launch the Stress details screen
     } else {
     sectionTitleHandler(steps[activeStep+1]);
@@ -89,8 +91,8 @@ const QuestionProgress = ({sectionTitleHandler, emptyStatus}) => {
     window.location.reload();
   };
 
-  const handleSubmission = () => {
-
+  const handleSubmission = async() => {
+    setSubmissionStatusParent(true);
   }
 
   return (
@@ -117,12 +119,16 @@ const QuestionProgress = ({sectionTitleHandler, emptyStatus}) => {
       {activeStep === steps.length ? ( // handle redirection here
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            {waitMessage}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
+            <Button variant="contained"
+                    sx={{
+                      backgroundColor: "red",
+                      marginLeft: '20px'
+                    }}
+                  onClick={handleReset}>Reset</Button>          </Box>
         </React.Fragment>
       ) : (
         <React.Fragment>
