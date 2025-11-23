@@ -8,23 +8,27 @@ import Box from '@mui/material/Box';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 
-const StressDetails = ({stress}) => {
+const StressDetails = ({stress, llmObject}) => {
     const [stressType, setStressType] = useState(stress);
+    const [llmResponse ,setLLMResponse] = useState(JSON.parse(llmObject));
+
+    console.log(stressType, llmResponse);
+    console.log(typeof(llmResponse))
 
     return (
     <div className="survey-card">
         <Grid sx={{
             margin: "20px 0px 0px 20px" 
         }}> 
-            <Typography variant='h3' sx={{
+            <Typography variant='h4' sx={{
                                 fontWeight: "bolder",
             }}>
                 Type of Stress
             </Typography>
-            <Typography variant='h2' sx={{
+            <Typography variant='h3' sx={{
                 textAlign: "center",
                 fontWeight: "bolder",
-                color: stressType == "Eustress" ? "green" : (stressType == "Distress" ? "red" : "black")
+                color: stressType.split(" ")[0] === "Eustress" ? "green" : (stressType.split(" ")[0] == "Distress" ? "red" : "black")
             }}>
                 {stressType}
             </Typography>
@@ -40,8 +44,9 @@ const StressDetails = ({stress}) => {
                 Why is it caused?
             </Typography>
             <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your rapid heartbeat is caused by the stimulating situations you\'re facing, which are exciting and engaging for you
+                {llmResponse["why_is_it_caused"]}
             </Typography>
+            {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your rapid heartbeat is caused by the stimulating situations you\'re facing, which are exciting and engaging for you */}
 
             <Box sx={{
                 width: "100vw",
@@ -54,12 +59,14 @@ const StressDetails = ({stress}) => {
             }}>
                 Advantages of this Stress
             </Typography>
-            <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Increased energy and motivation
-            </Typography>
-            <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Improved focus and concentration
-            </Typography>
+            {llmResponse['advantages_of_this_stress'].map((adv) => (
+                <Typography variant='h5' sx={{paddingTop: "20px"}}>
+                    {adv["positives"]}
+                </Typography>
+            ))}
+
+            {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Increased energy and motivation*/}
+         
 
             <Box sx={{
                 width: "100vw",
@@ -72,15 +79,15 @@ const StressDetails = ({stress}) => {
             }}>
                 Disadvantages of this Stress
             </Typography>
-                <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Potential burnout if not managed
-                </Typography>
-                <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Possible decreased performance under pressure
-                </Typography>
-                <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Negative impact on relationships and overall well-being
-                </Typography>
+
+                {llmResponse['disadvantages_of_this_stress'].map((disadv) => (
+                    <Typography variant='h5' sx={{paddingTop: "20px"}}>
+                        {disadv['negatives']}
+                    </Typography>
+                ))}
+
+                {/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Potential burnout if not managed*/}
+                
             
                 <Box sx={{
                 width: "100vw",
@@ -97,7 +104,7 @@ const StressDetails = ({stress}) => {
                 color: "orange",
                 fontWeight: "bolder"
             }}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Moderate (4/10)
+                {llmResponse['stress_score']}
             </Typography>
 
             <Box sx={{
@@ -111,16 +118,14 @@ const StressDetails = ({stress}) => {
             }}>
                 Ways to Overcome / Cope with the Stress
             </Typography>
-            <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Take regular breaks to relax and recharge
-            </Typography>
-            <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Prioritize self-care activities, such as exercise or meditation
-            </Typography>
-            <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Set realistic goals and deadlines to manage expectations
-            </Typography>
 
+            {llmResponse['overcome/cope_with_this_stress'].map((tip) => (
+            <Typography variant='h5' sx={{paddingTop: "20px"}}>
+                {tip['tip']}
+            </Typography>
+            ))}
+
+            {/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Take regular breaks to relax and recharge*/}
             <Box sx={{
                 width: "100vw",
                 height: "60px"
@@ -131,7 +136,9 @@ const StressDetails = ({stress}) => {
             <div style={{
                 display: "flex"
             }}>
-            <Button color='primary' variant='contained' sx={{
+            <Button color='primary'
+            onClick={() => window.location.reload()}
+            variant='contained' sx={{
                 marginLeft: "45%"
             }}>
                 GO Back

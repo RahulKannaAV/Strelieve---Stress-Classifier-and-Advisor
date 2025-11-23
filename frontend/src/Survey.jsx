@@ -7,6 +7,7 @@ import WaitModal from './components/WaitModal';
 import { LOCALHOST } from './constant';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import StressDetails from './components/StressDetails';
 
 const Survey = () => {
     const [allQuestions, setAllQuestions] = useState({});
@@ -16,6 +17,9 @@ const Survey = () => {
     const [keyObj, setKeyObj] = useState({});
     const [submit, setSubmit] = useState(false);
     const [sectionKeys, setSectionKeys] = useState([]);
+    const [llmResponse, setLLMResponse] = useState({});
+    const [stressType, setStressType] = useState("");
+    const [showLLM, setShowLLM] = useState(false);
     const [modalStatus, openModal] = useState({
         status: false,
         message: "Please wait"
@@ -120,9 +124,12 @@ const Survey = () => {
                 
                 if(sendResponse.status == 200) {
                     console.log("User responses sent successfully");
+                    setLLMResponse(sendResponse.data[1]);
+                    setStressType(sendResponse.data[0])
                 }
 
                 openModal({...modalStatus, status:false});
+                setShowLLM(true);
             } catch(err) {
                 console.error(`Error in sending User Response: ${err}`);
             }
@@ -139,7 +146,7 @@ const Survey = () => {
     return (
         modalStatus.status ? (<WaitModal key={modalStatus.status} shouldOpen={modalStatus.status} message={modalStatus.message}/>) :
         
-        (<div className="survey-card">
+        (showLLM ? (<StressDetails key={llmResponse} stress={stressType} llmObject={llmResponse} />) : (<div className="survey-card">
             <div style={{
                 display: "flex",
                 flexDirection: "row",
@@ -185,7 +192,7 @@ const Survey = () => {
                     IMPORT RESPONSE
                 </Button>
             </div>
-        </div>)
+        </div>))
     )
 }
 

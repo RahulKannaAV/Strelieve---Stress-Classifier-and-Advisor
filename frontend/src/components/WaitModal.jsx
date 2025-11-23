@@ -28,12 +28,36 @@ const WaitModal = ({shouldOpen, message}) => {
   onClose={handleClose}
   aria-labelledby="modal-modal-title"
   aria-describedby="modal-modal-description"
+  sx={{
+    borderRadius: "20px",
+  }}
 >
   <Box sx={style}>
-    <Typography id="modal-modal-title" variant="h6" component="h2">
-      Text in a modal
-    </Typography>
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+  <div style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center"
+            }}>
+                <img src={"stress.jpg"} style={{
+                    width: "80px",
+                    height: "80px",
+                    marginRight: "20px"
+                }} />
+                <Typography variant='h2' sx={{
+                textAlign: "center",
+                color: "blue",
+                fontWeight: "bold",
+                fontFamily: "Segoe UI",
+                paddingBottom: "25px"
+            }}>                         
+                
+                STRELIEVE
+                </Typography>
+            </div>
+
+    <Typography variant="h4" sx={{
+      textAlign: "center"
+    }}component="h2">
       {message}
     </Typography>
   </Box>

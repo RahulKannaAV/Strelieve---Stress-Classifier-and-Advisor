@@ -13,6 +13,9 @@ question_section_dict = {'Demographic': ["gender", "age"],
                          'Academic and Environment Stressors': ["academic_workload", "competition", "confidence_lack", "subject_confidence_lack", "conflict_acad_cocurr_activities", "attend_classes", "difficulties_with_professors", "stressful_workplace", "hostel_environment_difficulty"],
                          'Social and Relationship Factors': ["relationships", "relaxation_time_amount" ]}
 
+stress_labels = ['Distress (Negative Stress) - Stress that causes anxiety and impairs well-being.',
+        'Eustress (Positive Stress) - Stress that motivates and enhances performance.',
+        'No Stress - Currently experiencing minimal to no stress.']
 
 @app.route("/get-sections", methods=['GET'])
 def get_timeline_sections():
@@ -57,9 +60,10 @@ def send_suggestions():
 
     feature_vector_json = build_feature_vector_json(feature_vector, responses)
     print(stress_type)
-    return "Success"
-"""
+
     llm_response = get_llm_suggestions(feature_vector_json, stress_type)
-"""
+    print(llm_response)
+    return [stress_labels[stress_type[0]], llm_response]
+
 if __name__ == "__main__":
     app.run(debug=True, port=1234, host="localhost")

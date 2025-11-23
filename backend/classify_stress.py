@@ -1,7 +1,7 @@
 # Using KNN Model
 import pickle
 import json
-# import ollama
+import ollama
 from transformers import pipeline
 
 
@@ -44,8 +44,8 @@ def get_feature_vector(response, topic_label_json):
     return response_numeric
 def build_feature_vector_json(feature_vector, responses):
     # Extract key of responses
-    # Build dictionary of (key: feature_vector[i] for i, key in enumerate(responses.keys())
-    pass
+    fv_dict = {key: feature_vector[i] for i, key in enumerate(responses.keys())}
+    return fv_dict
 
 def get_prediction(sample):
     with open(MODEL_PATH, 'rb') as f:
@@ -57,13 +57,13 @@ def get_prediction(sample):
 
 
 def get_llm_suggestions(feature_vector_json, stress_type):
-    with open("../response_schema.json", 'r') as f:
+    with open("../response_schema.json", 'r', encoding='utf-8') as f:
         stress_response_schema = json.load(f)
 
     response = ollama.generate(model='llama3:8b',
                     format="json",
-                    prompt=f'Give some stress advice on the basis of the user conditions and follow this response schema {stress_response_schema}. Factor status is given as this {feature_vector_json} and stress is classified as {stress_type}')
+                    prompt=f'Give some stress advice on the basis of the user conditions and follow this response schema {stress_response_schema}. Factor status is given as this {feature_vector_json} and stress is classified as {stress_labels[stress_type[0]]}')
 
-    return response
+    return response['response']
 
 # get_feature_vector(user_response, topic_label_json)
