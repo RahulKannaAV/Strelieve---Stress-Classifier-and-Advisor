@@ -16,6 +16,10 @@ const Survey = () => {
     const [keyObj, setKeyObj] = useState({});
     const [submit, setSubmit] = useState(false);
     const [sectionKeys, setSectionKeys] = useState([]);
+    const [modalStatus, openModal] = useState({
+        status: false,
+        message: "Please wait"
+    });
 
     useEffect(() => {
         const getAllSurveyQuestions = async() => {
@@ -65,7 +69,7 @@ const Survey = () => {
     }, [currentSection])
 
 
-    console.log(allResponses);
+    console.log(modalStatus);
 
     const handleSection = (sectionTitle) => {
         setCurrentSection(sectionTitle);
@@ -106,15 +110,19 @@ const Survey = () => {
         const performSubmission = async() => {
             try {
                 console.log("Yes. I should");
+                openModal({message: "Please wait till we prepare the response",
+                    status: true
+                });// CONTINUE FROM HERE TOMORROW
+                
                 const sendResponse = await axios.post(`${LOCALHOST}/generate-suggestion`,
                     {user_response: allResponses}
                 );
                 
-                openModal(true);// CONTINUE FROM HERE TOMORROW
                 if(sendResponse.status == 200) {
                     console.log("User responses sent successfully");
-                    setWaitingMessage("Please wait for LLM response.");
                 }
+
+                openModal({...modalStatus, status:false});
             } catch(err) {
                 console.error(`Error in sending User Response: ${err}`);
             }
@@ -129,7 +137,9 @@ const Survey = () => {
     console.log(sectionKeys);
 
     return (
-        <div className="survey-card">
+        modalStatus.status ? (<WaitModal key={modalStatus.status} shouldOpen={modalStatus.status} message={modalStatus.message}/>) :
+        
+        (<div className="survey-card">
             <div style={{
                 display: "flex",
                 flexDirection: "row",
@@ -175,8 +185,8 @@ const Survey = () => {
                     IMPORT RESPONSE
                 </Button>
             </div>
-        </div>
-    );
+        </div>)
+    )
 }
 
 export default Survey;

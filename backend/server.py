@@ -57,7 +57,7 @@ def send_suggestions():
 
     feature_vector_json = build_feature_vector_json(feature_vector, responses)
     print(stress_type)
-    return 200
+    return "Success"
 """
     llm_response = get_llm_suggestions(feature_vector_json, stress_type)
 """
