@@ -61,7 +61,7 @@ const StressDetails = ({stress, llmObject}) => {
             </Typography>
             {llmResponse['advantages_of_this_stress'].map((adv) => (
                 <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                    {adv["positives"]}
+                    {adv}
                 </Typography>
             ))}
 
@@ -82,7 +82,7 @@ const StressDetails = ({stress, llmObject}) => {
 
                 {llmResponse['disadvantages_of_this_stress'].map((disadv) => (
                     <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                        {disadv['negatives']}
+                        {disadv}
                     </Typography>
                 ))}
 
@@ -119,9 +119,9 @@ const StressDetails = ({stress, llmObject}) => {
                 Ways to Overcome / Cope with the Stress
             </Typography>
 
-            {llmResponse['overcome/cope_with_this_stress'].map((tip) => (
+            {llmResponse['overcome_or_cope_with_this_stress'].map((tip) => (
             <Typography variant='h5' sx={{paddingTop: "20px"}}>
-                {tip['tip']}
+                {tip}
             </Typography>
             ))}
 

@@ -3,6 +3,7 @@ import pickle
 import json
 import ollama
 from transformers import pipeline
+from AdviceClass import StressAdvice
 
 
 MODEL_PATH = "../model_weights/best_model.pkl"
@@ -57,13 +58,13 @@ def get_prediction(sample):
 
 
 def get_llm_suggestions(feature_vector_json, stress_type):
-    with open("../response_schema.json", 'r', encoding='utf-8') as f:
-        stress_response_schema = json.load(f)
+
 
     response = ollama.generate(model='llama3:8b',
-                    format="json",
-                    prompt=f'Give some stress advice on the basis of the user conditions and follow this response schema {stress_response_schema}. Factor status is given as this {feature_vector_json} and stress is classified as {stress_labels[stress_type[0]]}')
+                    format=StressAdvice.model_json_schema(),
+                    prompt=f'Give some stress advice on the basis of the user conditions and follow the format {StressAdvice.model_json_schema()}. Factor status is given as this {feature_vector_json} and stress is classified as {stress_labels[stress_type[0]]}')
 
-    return response['response']
+    response_structured = StressAdvice.model_validate_json(response['response'])
+    return response_structured
 
 # get_feature_vector(user_response, topic_label_json)

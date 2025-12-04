@@ -62,8 +62,8 @@ def send_suggestions():
     print(stress_type)
 
     llm_response = get_llm_suggestions(feature_vector_json, stress_type)
-    print(llm_response)
-    return [stress_labels[stress_type[0]], llm_response]
+    print(llm_response.model_dump_json())
+    return [stress_labels[stress_type[0]], llm_response.model_dump_json()]
 
 if __name__ == "__main__":
     app.run(debug=True, port=1234, host="localhost")
